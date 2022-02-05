@@ -22,8 +22,7 @@
 	<!-- 서블릿 컨테이너(tomcat)의 DefaultServlet 위임(delegate) Handler -->
 	<mvc:default-servlet-handler />
 
-	<!-- mvc url-resource mapping -->
-	
+
 	<!-- Interceptors -->
 	<mvc:interceptors>
 		<mvc:interceptor>
@@ -53,7 +52,6 @@
 		<property name="suffix" value=".jsp"/>
 	</bean>
 	
-	 <!-- MessageSource -->
 
 	<!-- 멀티파트 리졸버 -->
 	<bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -64,6 +62,16 @@
 		<!-- defaultEncoding -->
 		<property name="defaultEncoding" value="utf-8" />
 	</bean>
+	
+	
+	<!-- mvc url-resource mapping -->
+	<mvc:resources mapping="/images/**" location="file:/upload-images/" />
+	
+	
+	<!-- MessageSource -->
+	
+	
+	
 	
 	<context:annotation-config />
 	<context:component-scan base-package="com.poscoict.jblog.controller, com.poscoict.jblog.exception" />

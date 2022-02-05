@@ -15,7 +15,7 @@ public class BlogRepository {
 		public boolean insert_basic_page(BlogVo vo) {
 			// TODO Auto-generated method stub
 			
-			return 1==sqlSession.insert("blog.insert_basic", vo);
+			return 1==sqlSession.insert("blog.insert_basic_page", vo);
 		}
 
 		public BlogVo select(String user_id) {

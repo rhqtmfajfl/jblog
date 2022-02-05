@@ -32,7 +32,7 @@ public class BlogController {
 		private FileUploadService fileUploadService;
 		
 		
-		@RequestMapping(value="", method=RequestMethod.GET)
+		@RequestMapping(value={"","/main"}, method=RequestMethod.GET)
 		public String list(@AuthUser UserVo authUser, Model model, HttpSession session) {
 			UserVo vo = new UserVo();
 //			UserVo vo = (UserVo)session.getAttribute("authUser");
@@ -68,10 +68,13 @@ public class BlogController {
 			System.out.println("여기는 블로그의 basic으로 가는 곳");
 			UserVo vo = userService.find(id);
 			
-			String user_id = vo.getId();
+//			String user_id = vo.getId();
 			
-			BlogVo blog_vo = blogService.select(user_id);
-			
+//			BlogVo blog_vo = blogService.select(user_id);
+//			
+//			String blog_title = blog_vo.getTitle();
+//			String blog_logo = blog_vo.getLogo();
+//			String blog_user_id = blog_vo.getUser_id();
 			
 			
 			model.addAttribute("user_id_name", vo);
@@ -83,7 +86,7 @@ public class BlogController {
 		public String write(
 				@PathVariable("id") String id,
 				@RequestParam(value="title", required=true, defaultValue="")String title,
-				@RequestParam(value="file1") MultipartFile multipartFile) {
+				@RequestParam(value="logo-file") MultipartFile multipartFile) {
 			
 				BlogVo vo = new BlogVo();
 				
@@ -94,7 +97,7 @@ public class BlogController {
 				
 				blogService.insert_basic_page(vo);
 			
-			return "redirect:/";
+			return "redirect:/{id}/admin/basic";
 		}
 		
 		

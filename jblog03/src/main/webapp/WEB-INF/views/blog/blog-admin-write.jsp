@@ -22,7 +22,7 @@
 		<div id="wrapper">
 			<div id="content" class="full-screen">
 				<ul class="admin-menu">
-					<li><a href="${pageContext.request.contextPath}/${authUser.id}/admin/basic">기본설정</a></li>
+					<li><a href="${pageContext.request.contextPath}/${user_id_name.id}/admin/basic">기본설정</a></li>
 					<li><a href="${pageContext.request.contextPath}/${user_id_name.id}/admin/category">카테고리</a></li>
 					<li class="selected">글작성</li>
 				</ul>

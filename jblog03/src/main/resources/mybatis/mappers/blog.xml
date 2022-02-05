@@ -3,11 +3,20 @@
 
 <mapper namespace="blog">
 
-<insert id="insert" parameterType="blogvo">
+<insert id="insert_basic_page" parameterType="blogvo">
+	<choose>
+	<when test="logo == null">
+	<![CDATA[
+		update blog set title = #{title} where user_id = #{user_id}
+	]]>
+	</when>
+	<otherwise>
 	<![CDATA[
 	insert into blog values(#{title}, #{logo}, #{user_id})
 	]]>
-
+	</otherwise>
+	
+</choose>
 </insert>
 
 <select id="select" parameterType="string" resultType="blogvo">
