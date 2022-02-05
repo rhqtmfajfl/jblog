@@ -8,11 +8,13 @@ select id, name from user where id= #{id} and password= #{password}
 ]]>
 </select>
 
-<select id="findByNo" parameterType="long" resultType="uservo" >
+<select id="findByIdAndName" parameterType="string" resultType="uservo" >
 <![CDATA[
-select no, name, email, gender from user where no= #{_parameter}
+select id, name from user where id = #{id}
 ]]>
 </select>
+
+
 
 <update id="update" parameterType="uservo">
 	<choose>

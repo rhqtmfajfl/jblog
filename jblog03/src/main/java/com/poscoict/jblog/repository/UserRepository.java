@@ -28,6 +28,13 @@ public class UserRepository {
 		
 		return sqlSession.selectOne("user.findByIdAndPassword", map);
 	}
+
+	public UserVo findByIdAndName(String id) {
+		// TODO Auto-generated method stub
+		
+		
+		return sqlSession.selectOne("user.findByIdAndName", id);
+	}
 	
 	
 }

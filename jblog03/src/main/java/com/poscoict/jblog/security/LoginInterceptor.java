@@ -32,7 +32,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		
 		// session 처리
 		HttpSession session = request.getSession(true);
-		session.setAttribute("authUser", authUser);
+		session.setAttribute("authUser", authUser);    
 		
 //		String id2 = authUser.getId();
 //		System.out.println(id2);

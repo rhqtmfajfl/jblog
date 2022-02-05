@@ -77,7 +77,7 @@ public class UserController {  //userservice가 di 해준다.
 		System.out.println("여기서 id 를 찾았다.. : " + authUser.getId());
 
 		session.setAttribute("authUser",  authUser); // authUser에는 id와 name을 출력할 수 있다.
-	
+		//여기서 main blog로 넘어 간다. 넘어가는 값은 id와 name이다.
 		
 		return "redirect:/blog";
 	}
