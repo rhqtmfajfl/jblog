@@ -13,9 +13,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.poscoict.jblog.security.AuthUser;
 import com.poscoict.jblog.service.BlogService;
+import com.poscoict.jblog.service.CategoryService;
 import com.poscoict.jblog.service.FileUploadService;
 import com.poscoict.jblog.service.UserService;
 import com.poscoict.jblog.vo.BlogVo;
+import com.poscoict.jblog.vo.CategoryVo;
 import com.poscoict.jblog.vo.UserVo;
 
 @Controller
@@ -31,6 +33,8 @@ public class BlogController {
 		@Autowired
 		private FileUploadService fileUploadService;
 		
+		@Autowired
+		private CategoryService categoryService;
 		
 		@RequestMapping(value={"","/main"}, method=RequestMethod.GET)
 		public String list(@AuthUser UserVo authUser, Model model, HttpSession session) {
@@ -110,6 +114,25 @@ public class BlogController {
 			return "blog/blog-admin-category";
 		}
 		
+		@RequestMapping(value="/admin/category", method=RequestMethod.POST)
+		public String category(@PathVariable("id") String id, 
+				@RequestParam(value="name", required=true, defaultValue="") String name,
+				@RequestParam(value="desc", required=true, defaultValue="")String desc,
+				Model model) {
+			
+			CategoryVo vo =new CategoryVo();
+			
+			vo.setBlog_user_id(id);
+			vo.setName(name);
+			vo.setDescription(desc);
+			
+			categoryService.insert_category(vo);
+			
+			
+			
+			return "redirect:/{id}/admin/category";
+			
+		}
 		
 		
 		
@@ -123,7 +146,15 @@ public class BlogController {
 		}
 		
 	
-
+		@RequestMapping(value="/admin/write", method=RequestMethod.POST)
+		public String write(@PathVariable("id") String id, 
+				@RequestParam(value="title", required=true, defaultValue="")String title,
+				@RequestParam(value="content", required=true, defaultValue="")String content,
+				Model model) {
+				
+			
+			return "redirect:/{id}/admin/write";
+		}
 		
 		
 		

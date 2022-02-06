@@ -26,7 +26,7 @@
 					<li><a href="${pageContext.request.contextPath}/${user_id_name.id}/admin/category">카테고리</a></li>
 					<li class="selected">글작성</li>
 				</ul>
-				<form action="" method="post">
+				<form action="${pageContext.request.contextPath}/${user_id_name.id}/admin/write" method="post">
 			      	<table class="admin-cat-write">
 			      		<tr>
 			      			<td class="t">제목</td>
