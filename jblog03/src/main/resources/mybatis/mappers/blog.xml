@@ -25,4 +25,21 @@ select title, logo, user_id from blog where user_id= #{user_id}
 ]]>
 
 </select>
+
+<update id="update_blog" parameterType="string">
+	<choose>
+	<when test="logo == null">
+	<![CDATA[
+		update blog set title = #{title} where user_id = #{user_id}
+	]]>
+	</when>
+	<otherwise>
+	<![CDATA[
+		update blog set title = #{title}, logo = #{logo} where user_id = #{user_id}
+	]]>
+	</otherwise>
+</choose>
+</update>
+
+
 </mapper>

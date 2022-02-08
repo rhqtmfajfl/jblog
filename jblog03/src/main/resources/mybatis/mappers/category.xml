@@ -12,6 +12,25 @@
 </insert>
 
 
+<select id="select_category_no" parameterType="string" resultType="categoryvo">
+<![CDATA[ 
+	select no, name, description, blog_user_id from category where blog_user_id = #{blog_user_id}
+]]>
+
+</select>
+
+<select id="select_category_all" resultType="categoryvo">
+<![CDATA[ 
+	select c.no, c.name, c.description, c.blog_user_id  from category c order by no desc;
+]]>
+
+</select>
+
+<select id="select_no_name" parameterType="string" resultType="categoryvo">
+<![CDATA[ 
+	select no from category where name = #{name}
+]]>
+</select>
 
 
 </mapper>

@@ -20,7 +20,12 @@ public class BlogRepository {
 
 		public BlogVo select(String user_id) {
 			// TODO Auto-generated method stub
-			return sqlSession.selectOne("blog.select", user_id);
+			return sqlSession.selectOne("blog.select", user_id);  // title, logo, user_id 출력된다.
+		}
+
+		public boolean update_blog(BlogVo vo) {
+			// TODO Auto-generated method stub
+			return 1 == sqlSession.update("blog.update_blog", vo);
 		}
 		
 		

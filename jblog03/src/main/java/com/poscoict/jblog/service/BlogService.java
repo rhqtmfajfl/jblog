@@ -22,4 +22,10 @@ public class BlogService {
 			// TODO Auto-generated method stub
 			return blogRepository.select(user_id);
 		}
+
+		public boolean update_blog(BlogVo vo) {
+			// TODO Auto-generated method stub
+			
+			return blogRepository.update_blog(vo);
+		}
 }
