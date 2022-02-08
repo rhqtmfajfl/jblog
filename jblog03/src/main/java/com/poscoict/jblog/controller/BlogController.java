@@ -1,8 +1,7 @@
 package com.poscoict.jblog.controller;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -93,10 +92,31 @@ public class BlogController {
 //			return null;
 //		}
 		
-		@RequestMapping(value={"","/main"}, method=RequestMethod.GET)
+		@RequestMapping(value={ "", "/{pathNo1}", "/{pathNo1}/{pathNo2}" })
 		public String list(@AuthUser UserVo authUser, 
-				@PathVariable("id")String id,
+				@PathVariable("id") String id,
+				@PathVariable("pathNo1") Optional<Integer> pathNo1,
+				@PathVariable("pathNo2") Optional<Integer> pathNo2,
 				Model model, HttpSession session) {
+			
+			int categoryNo = 0;
+			int postNo = 0;
+			
+			if (pathNo2.isPresent()) {
+				categoryNo = pathNo1.get();
+				postNo = pathNo2.get();
+			} else if (pathNo1.isPresent()) {
+				categoryNo = pathNo1.get();
+			}
+			
+
+			model.addAttribute("blogVo", blogService.getBlog(id)); // 추후 인터셉터로 이동
+			model.addAttribute("categoryList", blogService.getCategoryList(id)); // 얘도 이동해야할듯
+
+			model.addAttribute("postList", blogService.getPostList(id, categoryNo));
+			model.addAttribute("post", blogService.getPost(id, categoryNo, postNo));
+
+			
 			UserVo vo = new UserVo();
 
 			

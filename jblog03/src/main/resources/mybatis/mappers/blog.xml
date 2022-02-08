@@ -42,4 +42,104 @@ select title, logo, user_id from blog where user_id= #{user_id}
 </update>
 
 
+
+<select id="findBlog" parameterType="string" resultType="blogvo">
+	<![CDATA[
+		SELECT 
+		    title, logo, user_id
+		FROM
+		    blog
+		WHERE
+		    user_id = #{user_id }
+	]]>
+	</select>
+
+	<select id="findCategory" parameterType="string"
+		resultType="categoryvo">
+	<![CDATA[	
+		SELECT 
+    		no, name, description, blog_user_id
+		FROM
+    		category
+		WHERE
+    		blog_user_id = #{blog_user_id }
+	]]>
+	</select>
+
+	<select id="findAllPost" parameterType="string"
+		resultType="postvo">
+	<![CDATA[
+		SELECT 
+		    p.no, p.title, p.reg_date, p.category_no
+		FROM
+		    category c
+		        JOIN
+		    post p ON c.no = p.category_no
+		WHERE
+		    c.blog_user_id = #{blog_user_id }
+		ORDER BY p.reg_date DESC
+	]]>
+	</select>
+
+	<select id="findCategoryPostList" parameterType="map"
+		resultType="postvo">
+	<![CDATA[
+		SELECT 
+		    p.no, p.title, p.reg_date, p.category_no
+		FROM
+		    category c
+		        JOIN
+		    post p ON c.no = p.category_no
+		WHERE
+		    c.blog_user_id = #{blog_user_id } AND p.category_no =#{category_no }
+		ORDER BY p.reg_date DESC
+	]]>
+	</select>
+
+	<select id="findPost" parameterType="map" resultType="postvo">
+	<![CDATA[
+		SELECT 
+		    p.no, p.title, p.contents
+		FROM
+		    category c
+		        JOIN
+		    post p ON c.no = p.category_no
+		WHERE
+		    c.blog_user_id = #{blog_user_id } AND p.category_no = #{category_no } AND p.no = #{no }
+	]]>
+	</select>
+
+	<select id="findRecentPost" parameterType="string"
+		resultType="postvo">
+	<![CDATA[
+		SELECT 
+		    p.no, p.title, p.contents
+		FROM
+		    category c
+		        JOIN
+		    post p ON c.no = p.category_no
+		WHERE
+		    c.blog_user_id = #{blog_user_id }
+		ORDER BY p.reg_date DESC
+		LIMIT 1
+	]]>
+	</select>
+
+	<select id="findCategoryRecentPost" parameterType="map"
+		resultType="postvo">
+	<![CDATA[
+		SELECT 
+		    p.no, p.title, p.contents
+		FROM
+		    category c
+		        JOIN
+		    post p ON c.no = p.category_no
+		WHERE
+		    c.blog_user_id = #{blog_user_id } AND p.category_no =#{category_no }
+		ORDER BY p.reg_date DESC
+		LIMIT 1
+	]]>
+	</select>
+
+
 </mapper>
