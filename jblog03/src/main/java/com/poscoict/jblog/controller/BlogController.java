@@ -1,5 +1,7 @@
 package com.poscoict.jblog.controller;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -93,49 +95,30 @@ public class BlogController {
 		@RequestMapping(value={"","/main"}, method=RequestMethod.GET)
 		public String list(@AuthUser UserVo authUser, Model model, HttpSession session) {
 			UserVo vo = new UserVo();
-//			UserVo vo = (UserVo)session.getAttribute("authUser");
-//			UserVo vo = (UserVo)request.getAttribute("authUser");
-//			userService.getUser(null, null);
+
 			
 			String id = authUser.getId();
 			String name = authUser.getName();
 			
 			vo.setId(id);
 			vo.setName(name);
-//			String id = authUser.getId();
-//			String name = authUser.getName();
-			
-//			vo.setId(id);
-//			vo.setName(name);
+
 			
 			System.out.println("여기서 vo 생성 : " +id);
 			System.out.println("여기 위엣 vo 생성");
 
 			session.setAttribute("authUser", vo);
-//			Map<String, Object> map = blogService.getContentsList();
-			
-//			UserVo vo = (UserVo)request
+
 			
 			return "blog/blog-main";
 		}
 		
 		@RequestMapping(value="/admin/basic", method=RequestMethod.GET)
 		public String basic(@AuthUser UserVo authUser, @PathVariable("id") String id, Model model, HttpSession session) {
-//			Map<String, Object> map = blogService.getContentsList();
 			
 			System.out.println("여기는 블로그의 basic으로 가는 곳");
-//			UserVo vo = userService.find(id);
-			
-//			String user_id = vo.getId();
-//			
+
 			BlogVo blog_vo = blogService.select(authUser.getId());
-//			String logo = blog_vo.getLogo();
-//			String blog_title = blog_vo.getTitle();
-//			String blog_logo = blog_vo.getLogo();
-//			String blog_user_id = blog_vo.getUser_id();
-			
-//			session.setAttribute("blog_logo", logo);
-//			session.setAttribute("authUser", vo);
 
 			model.addAttribute("blog_vo", blog_vo);
 			
@@ -169,10 +152,9 @@ public class BlogController {
 		public String category(@AuthUser UserVo authUser,@PathVariable("id") String id, Model model) {
 			
 			System.out.println("여기는 블로그의 category로 가는 곳");
-//			UserVo vo = userService.find(id);
-//			model.addAttribute("user_id_name", vo);
-			
+
 			Map<String, Object> map = categoryService.select_category_all();
+
 			model.addAttribute("category_list", map);
 			
 			return "blog/blog-admin-category";
@@ -204,9 +186,7 @@ public class BlogController {
 		public String write(@AuthUser UserVo authUser, @PathVariable("id") String id, Model model) {
 			
 			System.out.println("여기는 블로그의 write로 가는 곳");
-//			UserVo vo = userService.find(id); //find로 id와 name 찾을 수 있다.
-//			model.addAttribute("user_id_name", vo);
-			
+
 			//여기서 카테고리 name을 넘겨 줄수 있어야 한다. 그래야 
 			//카테고리 명을 선택 할 수 있다.
 			
@@ -222,22 +202,17 @@ public class BlogController {
 		public String write(@PathVariable("id") String id, 
 				@RequestParam(value="title", required=true, defaultValue="")String title,
 				@RequestParam(value="content", required=true, defaultValue="")String content,
+				@RequestParam(value="category", required=true, defaultValue="")int no,
 				Model model) {
 				
-			//여기서 select로 category의 no를 가지고 와야 한다.
+			//여기서 select로 category의 no를 가지고 와야 한다. name category에서의 value 값을 가져오면 된다.
 			
-			CategoryVo category_vo = categoryService.select_category_no(id);
-			
-			String category_name = category_vo.getName(); //카테고리 넘버
-			
-			CategoryVo category_no = categoryService.select_no_name(category_name);
-			System.out.println("여기서 카테고리 no :" + category_no.getNo());
-			System.out.println("위에 no가 있다~~");
+
 			PostVo vo = new PostVo();
 			
 			vo.setTitle(title);
 			vo.setContents(content);
-			vo.setCategory_no(category_no.getNo());
+			vo.setCategory_no(no);
 			
 			postService.insert_post_info(vo);
 			

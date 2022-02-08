@@ -16,7 +16,7 @@
 			<ul>
 				<li><a href="">로그인</a></li>
 				<li><a href="">로그아웃</a></li>
-				<li><a href="${pageContext.request.contextPath}/${authUser.id}/admin/basic">블로그 관리</a></li>
+				<li><a href="${pageContext.request.contextPath}/${authUser.id}">블로그 관리</a></li>
 			</ul>
 		</div>
 		<div id="wrapper">
@@ -39,7 +39,7 @@
 					<tr>
 						<td>${vo.no}</td>
 						<td>${vo.name}</td>
-						<td>0</td>
+						<td>${vo.post_count}</td>
 						<td>${vo.description}</td>
 						<td>
 						<a 

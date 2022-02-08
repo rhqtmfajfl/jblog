@@ -17,6 +17,16 @@ public class PostService {
 		
 		return postRepository.insert_post_info(vo);
 	}
+
+	public PostVo select_category_no_from_post() {
+		// TODO Auto-generated method stub
+		return postRepository.select_category_no_from_post();
+	}
+
+	public int select_post_count(int category_no) {
+		// TODO Auto-generated method stub
+		return postRepository.select_post_count(category_no);
+	}
 	
 	
 

@@ -16,6 +16,16 @@ public class PostRepository {
 
 		return 1 == sqlSession.insert("post.insert_post_info", vo);
 	}
+
+	public PostVo select_category_no_from_post() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("post.select_category_no_from_post");
+	}
+
+	public int select_post_count(int category_no) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("post.select_post_count", category_no);
+	}
 	
 	
 	

@@ -11,4 +11,18 @@
 
 </insert>
 
+
+<select id="select_category_no_from_post" resultType="postvo">
+<![CDATA[ 
+	select no, title, contents, reg_date, category_no from post
+]]>
+</select>
+
+<select id="select_post_count" parameterType="int" resultType="int">
+	<![CDATA[ 
+		select count(category_no) as post_count from post where category_no = #{category_no};
+	]]>
+</select>
+
+
 </mapper>

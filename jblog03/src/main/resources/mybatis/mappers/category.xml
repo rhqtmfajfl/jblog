@@ -21,7 +21,14 @@
 
 <select id="select_category_all" resultType="categoryvo">
 <![CDATA[ 
-	select c.no, c.name, c.description, c.blog_user_id  from category c order by no desc;
+select c.no,
+    c.name,
+    c.description,
+    c.blog_user_id, count(p.category_no) as post_count
+from category c, post p 
+where p.category_no = c.no
+Group By c.no
+order by c.no desc
 ]]>
 
 </select>
