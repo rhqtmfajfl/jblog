@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.poscoict.jblog.security.Auth;
 import com.poscoict.jblog.security.AuthUser;
 import com.poscoict.jblog.service.BlogService;
 import com.poscoict.jblog.service.CategoryService;
@@ -74,7 +75,7 @@ public class BlogController {
 //			return "BlogController.index";
 //		}
 //		
-////		@ResponseBody
+////	@ResponseBody
 //		@RequestMapping("/{categoryNo}/{postNo}")
 //		public String index1(@PathVariable("id") String id, 
 //				@PathVariable("cateogryNo")Long categoryNo) {
@@ -93,26 +94,31 @@ public class BlogController {
 //		}
 		
 		@RequestMapping(value={"","/main"}, method=RequestMethod.GET)
-		public String list(@AuthUser UserVo authUser, Model model, HttpSession session) {
+		public String list(@AuthUser UserVo authUser, 
+				@PathVariable("id")String id,
+				Model model, HttpSession session) {
 			UserVo vo = new UserVo();
 
 			
-			String id = authUser.getId();
+			String id2 = authUser.getId();
 			String name = authUser.getName();
 			
-			vo.setId(id);
+			vo.setId(id2);
 			vo.setName(name);
 
+			BlogVo blog_vo = blogService.select(authUser.getId());
+
 			
-			System.out.println("여기서 vo 생성 : " +id);
-			System.out.println("여기 위엣 vo 생성");
 
+			session.setAttribute("id", id);
 			session.setAttribute("authUser", vo);
-
+			model.addAttribute("blog_vo", blog_vo);
+			
 			
 			return "blog/blog-main";
 		}
 		
+		@Auth
 		@RequestMapping(value="/admin/basic", method=RequestMethod.GET)
 		public String basic(@AuthUser UserVo authUser, @PathVariable("id") String id, Model model, HttpSession session) {
 			
@@ -124,7 +130,8 @@ public class BlogController {
 			
 			return "blog/blog-admin-basic";
 		}
-		
+
+		@Auth
 		@RequestMapping(value="/admin/basic", method=RequestMethod.POST)
 		public String write(
 				@PathVariable("id") String id,
@@ -147,7 +154,8 @@ public class BlogController {
 			return "redirect:/{id}/admin/basic";
 		}
 		
-		
+
+		@Auth
 		@RequestMapping(value="/admin/category", method=RequestMethod.GET)
 		public String category(@AuthUser UserVo authUser,@PathVariable("id") String id, Model model) {
 			
@@ -157,11 +165,17 @@ public class BlogController {
 			
 //			System.out.println("지금 map :" +((List<CategoryVo>)map.get("list")).get(0).getPost_count());
 //			System.out.println("지금 map :" +map);
+			
+			BlogVo blog_vo = blogService.select(authUser.getId());
+
+			model.addAttribute("blog_vo", blog_vo);
+			
 			model.addAttribute("category_list", map);
 			
 			return "blog/blog-admin-category";
 		}
-		
+
+		@Auth
 		@RequestMapping(value="/admin/category", method=RequestMethod.POST)
 		public String category(@PathVariable("id") String id, 
 				@RequestParam(value="name", required=true, defaultValue="") String name,
@@ -183,7 +197,8 @@ public class BlogController {
 		}
 		
 		
-		
+
+		@Auth
 		@RequestMapping(value="/admin/write", method=RequestMethod.GET)
 		public String write(@AuthUser UserVo authUser, @PathVariable("id") String id, Model model) {
 			
@@ -192,6 +207,10 @@ public class BlogController {
 			//여기서 카테고리 name을 넘겨 줄수 있어야 한다. 그래야 
 			//카테고리 명을 선택 할 수 있다.
 			
+			BlogVo blog_vo = blogService.select(authUser.getId());
+
+			model.addAttribute("blog_vo", blog_vo);
+			
 			Map<String, Object> map = categoryService.select_category_all(id);
 			model.addAttribute("category_list", map);
 			
@@ -199,7 +218,8 @@ public class BlogController {
 			return "blog/blog-admin-write";
 		}
 		
-	
+
+		@Auth
 		@RequestMapping(value="/admin/write", method=RequestMethod.POST)
 		public String write(@PathVariable("id") String id, 
 				@RequestParam(value="title", required=true, defaultValue="")String title,
@@ -220,7 +240,8 @@ public class BlogController {
 			
 			return "redirect:/{id}/admin/write";
 		}
-		
+
+		@Auth
 		@RequestMapping(value="/delete/category/{no}", method=RequestMethod.GET)
 		public String delete(@AuthUser UserVo authUser, 
 				@PathVariable("id")String id,
@@ -229,6 +250,7 @@ public class BlogController {
 			
 				//no 개수가 여기로 넘어 온다.
 			//그리고 no가 0인것을 삭제 한다.
+			
 			
 			categoryService.delete_category(no);
 			
