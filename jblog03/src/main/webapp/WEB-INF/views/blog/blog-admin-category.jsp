@@ -42,10 +42,12 @@
 						<td>${vo.post_count}</td>
 						<td>${vo.description}</td>
 						<td>
+						<c:if test="${vo.post_count eq 0}" >
 						<a 
-						href="${pageContext.servletContext.contextPath}/${authUser.id}/delete/category"
-						class="del"><img src="${pageContext.request.contextPath}/assets/images/delete.jpg">
-						</a>
+						href="${pageContext.servletContext.contextPath}/${authUser.id}/delete/category/${vo.no}"
+						class="del"><img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></a>
+						</c:if>
+						
 						</td>
 					</tr>		
 					

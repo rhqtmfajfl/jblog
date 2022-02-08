@@ -153,8 +153,10 @@ public class BlogController {
 			
 			System.out.println("여기는 블로그의 category로 가는 곳");
 
-			Map<String, Object> map = categoryService.select_category_all();
-
+			Map<String, Object> map = categoryService.select_category_all(id);
+			
+//			System.out.println("지금 map :" +((List<CategoryVo>)map.get("list")).get(0).getPost_count());
+//			System.out.println("지금 map :" +map);
 			model.addAttribute("category_list", map);
 			
 			return "blog/blog-admin-category";
@@ -190,7 +192,7 @@ public class BlogController {
 			//여기서 카테고리 name을 넘겨 줄수 있어야 한다. 그래야 
 			//카테고리 명을 선택 할 수 있다.
 			
-			Map<String, Object> map = categoryService.select_category_all();
+			Map<String, Object> map = categoryService.select_category_all(id);
 			model.addAttribute("category_list", map);
 			
 			
@@ -219,11 +221,16 @@ public class BlogController {
 			return "redirect:/{id}/admin/write";
 		}
 		
-		@RequestMapping(value="/delete/category", method=RequestMethod.GET)
+		@RequestMapping(value="/delete/category/{no}", method=RequestMethod.GET)
 		public String delete(@AuthUser UserVo authUser, 
 				@PathVariable("id")String id,
+				@PathVariable("no")int no,
 				Model model) {
 			
+				//no 개수가 여기로 넘어 온다.
+			//그리고 no가 0인것을 삭제 한다.
+			
+			categoryService.delete_category(no);
 			
 			
 			return "blog/blog-admin-category";

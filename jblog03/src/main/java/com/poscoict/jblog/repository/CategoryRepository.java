@@ -23,13 +23,17 @@ public class CategoryRepository {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("category.select_category_no", blog_user_id);
 	}
-	public List<CategoryVo> select_category_all() {
+	public List<CategoryVo> select_category_all(String id) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("category.select_category_all");
+		return sqlSession.selectList("category.select_category_all", id);
 	}
 	public CategoryVo select_no_name(String name) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("category.select_no_name", name);
+	}
+	public boolean delete_category(int no) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("category.delete_category", no);
 	}
 
 }

@@ -33,18 +33,40 @@ public class CategoryService {
 		return category_info;
 	}
 	
-	public Map<String, Object> select_category_all() {
+	public Map<String, Object> select_category_all(String id) {
 		Map<String, Object> map = new HashMap<>();
 		
-		map.put("list", categoryRepository.select_category_all());
+		
+		
+		map.put("list", categoryRepository.select_category_all(id));
 		
 		return map;
 		
 	}
+	
+//	public Map<String, CategoryVo> select_category_default() {
+//
+//		Map<String, CategoryVo> map_no = new HashMap<>();
+//		
+//		for(CategoryVo category : categoryRepository.select_category_all()) {
+//			map_no.put(category.get, category);
+//		}
+//		
+//		return null;
+//	}
 
 	public CategoryVo select_no_name(String name) {
 		// TODO Auto-generated method stub
 		return categoryRepository.select_no_name(name);
+	}
+	
+
+
+
+	public boolean delete_category(int no) {
+		// TODO Auto-generated method stub
+	
+		return categoryRepository.delete_category(no);
 	}
 	
 	
