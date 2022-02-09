@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="blog">
+
+<insert id="insert_basic_page" parameterType="blogvo">
+	<choose>
+	<when test="logo == null">
+	<![CDATA[
+		update blog set title = #{title} where user_id = #{user_id}
+	]]>
+	</when>
+	
+	<otherwise>
+	<![CDATA[
+	insert into blog values(#{title}, #{logo}, #{user_id})
+	]]>
+	</otherwise>
+	
+</choose>
+</insert>
+
+<select id="select" parameterType="string" resultType="blogvo">
+<![CDATA[
+select title, logo, user_id from blog where user_id= #{_parameter}
+]]>
+
+</select>
+
+<update id="update_blog" parameterType="blogvo">
+	<choose>
+	<when test="logo == null">
+	<![CDATA[
+		update blog set title = #{title} where user_id = #{user_id}
+	]]>
+	</when>
+	
+	<otherwise>
+	<![CDATA[
+		update blog set title = #{title}, logo = #{logo} where user_id = #{user_id}
+	]]>
+	</otherwise>
+</choose>
+</update>
+
+
+
+<select id="findBlog" parameterType="string" resultType="blogvo">
+	<![CDATA[
+		SELECT 
+		    title, logo, user_id
+		FROM
+		    blog
+		WHERE
+		    user_id = #{_parameter }
+	]]>
+	</select>
+
+	<select id="findCategory" parameterType="string"
+		resultType="categoryvo">
+	<![CDATA[	
+		SELECT 
+    		no, name, description, blog_user_id
+		FROM
+    		category
+		WHERE
+    		blog_user_id = #{_parameter }
+	]]>
+	</select>
+
+	<select id="findAllPost" parameterType="string"
+		resultType="postvo">
+	<![CDATA[
+		SELECT 
+		    p.no, p.title, p.reg_date, p.category_no
+		FROM
+		    category c
+		        JOIN
+		    post p ON c.no = p.category_no
+		WHERE
+		    c.blog_user_id = #{_parameter }
+		ORDER BY p.reg_date DESC
+	]]>
+	</select>
+
+	<select id="findCategoryPostList" parameterType="map"
+		resultType="postvo">
+	<![CDATA[
+		SELECT 
+		    p.no, p.title, p.reg_date, p.category_no
+		FROM
+		    category c
+		        JOIN
+		    post p ON c.no = p.category_no
+		WHERE
+		    c.blog_user_id = #{blog_user_id } AND p.category_no =#{category_no }
+		ORDER BY p.reg_date DESC
+	]]>
+	</select>
+
+	<select id="findPost" parameterType="map" resultType="postvo">
+	<![CDATA[
+		SELECT 
+		    p.no as no, p.title as title, p.contents as contents
+		FROM
+		    category c
+		        JOIN
+		    post p ON c.no = p.category_no
+		WHERE
+		    c.blog_user_id = #{blog_user_id } AND p.category_no = #{category_no } AND p.no = #{no}
+	]]>
+	</select>
+
+	<select id="findRecentPost" parameterType="string"
+		resultType="postvo">
+	<![CDATA[
+		SELECT 
+		    p.no, p.title, p.contents
+		FROM
+		    category c
+		        JOIN
+		    post p ON c.no = p.category_no
+		WHERE
+		    c.blog_user_id = #{_parameter }
+		ORDER BY p.reg_date DESC
+		LIMIT 1
+	]]>
+	</select>
+
+	<select id="findCategoryRecentPost" parameterType="map"
+		resultType="postvo">
+	<![CDATA[
+		SELECT 
+		    p.no, p.title, p.contents
+		FROM
+		    category c
+		        JOIN
+		    post p ON c.no = p.category_no
+		WHERE
+		    c.blog_user_id = #{blog_user_id } AND p.category_no =#{category_no }
+		ORDER BY p.reg_date DESC
+		LIMIT 1
+	]]>
+	</select>
+
+
+</mapper>
