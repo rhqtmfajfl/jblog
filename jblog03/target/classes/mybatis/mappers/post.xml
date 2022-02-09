@@ -27,7 +27,7 @@
 <select id="findPost" parameterType="map" resultType="postvo">
 	select no, title, contents 
 	from post 
-	where category_no = (select no from category where blog_user_id = #{blog_user_id } and no = #{category_no }) and no = #{no} ;
+	where category_no = (select no from category where blog_user_id = #{blog_user_id } and no = #{category_no }) and no = #{no};
 </select>
 
 </mapper>

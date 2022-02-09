@@ -71,7 +71,7 @@ public class BlogRepository {
 			Map<String, Object> param = new HashMap<>();
 			param.put("blog_user_id", blog_user_id);
 			param.put("category_no", category_no);
-			param.put("postNo", postNo);
+			param.put("no", postNo);
 			
 
 			PostVo vo = sqlSession.selectOne("blog.findPost", param);

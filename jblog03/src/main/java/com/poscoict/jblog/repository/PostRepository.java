@@ -36,7 +36,7 @@ public class PostRepository {
 		
 		map.put("blog_user_id", blog_user_id);
 		map.put("category_no",category_no );
-		map.put("no", postNo);
+		map.put("postNo", postNo);
 		
 	
 		
