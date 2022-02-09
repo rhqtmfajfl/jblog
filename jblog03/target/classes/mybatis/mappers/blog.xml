@@ -10,6 +10,7 @@
 		update blog set title = #{title} where user_id = #{user_id}
 	]]>
 	</when>
+	
 	<otherwise>
 	<![CDATA[
 	insert into blog values(#{title}, #{logo}, #{user_id})
@@ -21,18 +22,19 @@
 
 <select id="select" parameterType="string" resultType="blogvo">
 <![CDATA[
-select title, logo, user_id from blog where user_id= #{user_id}
+select title, logo, user_id from blog where user_id= #{_parameter}
 ]]>
 
 </select>
 
-<update id="update_blog" parameterType="string">
+<update id="update_blog" parameterType="blogvo">
 	<choose>
 	<when test="logo == null">
 	<![CDATA[
 		update blog set title = #{title} where user_id = #{user_id}
 	]]>
 	</when>
+	
 	<otherwise>
 	<![CDATA[
 		update blog set title = #{title}, logo = #{logo} where user_id = #{user_id}
@@ -50,7 +52,7 @@ select title, logo, user_id from blog where user_id= #{user_id}
 		FROM
 		    blog
 		WHERE
-		    user_id = #{user_id }
+		    user_id = #{_parameter }
 	]]>
 	</select>
 
@@ -62,7 +64,7 @@ select title, logo, user_id from blog where user_id= #{user_id}
 		FROM
     		category
 		WHERE
-    		blog_user_id = #{blog_user_id }
+    		blog_user_id = #{_parameter }
 	]]>
 	</select>
 
@@ -76,7 +78,7 @@ select title, logo, user_id from blog where user_id= #{user_id}
 		        JOIN
 		    post p ON c.no = p.category_no
 		WHERE
-		    c.blog_user_id = #{blog_user_id }
+		    c.blog_user_id = #{_parameter }
 		ORDER BY p.reg_date DESC
 	]]>
 	</select>
@@ -99,13 +101,13 @@ select title, logo, user_id from blog where user_id= #{user_id}
 	<select id="findPost" parameterType="map" resultType="postvo">
 	<![CDATA[
 		SELECT 
-		    p.no, p.title, p.contents
+		    p.no as no, p.title as title, p.contents as contents
 		FROM
 		    category c
 		        JOIN
 		    post p ON c.no = p.category_no
 		WHERE
-		    c.blog_user_id = #{blog_user_id } AND p.category_no = #{category_no } AND p.no = #{no }
+		    c.blog_user_id = #{blog_user_id } AND p.category_no = #{category_no } AND p.no = #{no}
 	]]>
 	</select>
 
@@ -119,7 +121,7 @@ select title, logo, user_id from blog where user_id= #{user_id}
 		        JOIN
 		    post p ON c.no = p.category_no
 		WHERE
-		    c.blog_user_id = #{blog_user_id }
+		    c.blog_user_id = #{_parameter }
 		ORDER BY p.reg_date DESC
 		LIMIT 1
 	]]>

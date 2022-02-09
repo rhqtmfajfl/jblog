@@ -18,7 +18,7 @@
 					<c:if test="${post eq null }">
 					<h2 style="color: gray; font-weight: bold; text-align: center;">작성 된 글이 없습니다.</h2>
 					</c:if>
-					<h4>${post.title }</h4>
+					<h4>${post.title}</h4>
 					<p>
 					${post.contents}
 					<p>
@@ -28,17 +28,14 @@
 				<c:if test="${postList eq null }">
 					<h3 style="color: gray; font-weight: bold; text-align: center;">해당 카테고리에 글이 없습니다.</h3>
 				</c:if>
-				<c:forEach items="${postList }" var="postItem" varStatus="status">
-					<li><a href="${pageContext.request.contextPath }/${authUser.id }/${postItem.category_no }/${postItem.no }">${postItem.title }</a> <span>${postItem.reg_date }</span>	</li>
+				<c:forEach items="${postList}" var="postItem">
+					<li><a href="${pageContext.request.contextPath }/${id}/${postItem.category_no}/${postItem.no}">${postItem.title}</a> <span>${postItem.reg_date }</span>	</li>
 				</c:forEach>
 				</ul>
 				
 			</div>
 		</div>
 
-		
-
-		
 		<c:import url="/WEB-INF/views/includes/navigation.jsp" />
 		<c:import url="/WEB-INF/views/includes/footer.jsp" />
 		</div>

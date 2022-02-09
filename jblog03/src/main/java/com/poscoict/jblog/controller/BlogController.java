@@ -27,8 +27,8 @@ import com.poscoict.jblog.vo.PostVo;
 import com.poscoict.jblog.vo.UserVo;
 
 @Controller
-@RequestMapping("/{id}")
-//@RequestMapping("/{id:(?!assets).*}")  //: 로하면 뒤에 패턴을 찾을 수 있게 해준다. : .* 로 할 수 있다.(?!assets).*) assets라는 것이 있는 것  
+//@RequestMapping("/{id}")
+@RequestMapping("/{id:(?!assets|images).*}")  //: 로하면 뒤에 패턴을 찾을 수 있게 해준다. : .* 로 할 수 있다.(?!assets).*) assets라는 것이 있는 것  
 public class BlogController {
 		
 		@Autowired
@@ -110,28 +110,17 @@ public class BlogController {
 			}
 			
 
-			model.addAttribute("blogVo", blogService.getBlog(id)); // 추후 인터셉터로 이동
 			model.addAttribute("categoryList", blogService.getCategoryList(id)); // 얘도 이동해야할듯
 
 			model.addAttribute("postList", blogService.getPostList(id, categoryNo));
 			model.addAttribute("post", blogService.getPost(id, categoryNo, postNo));
-
-			
-			UserVo vo = new UserVo();
-
-			
-			String id2 = authUser.getId();
-			String name = authUser.getName();
-			
-			vo.setId(id2);
-			vo.setName(name);
-
-			BlogVo blog_vo = blogService.select(authUser.getId());
+			//여기서 getPost로 인해서
+			BlogVo blog_vo = blogService.select(id);
 
 			
 
 			session.setAttribute("id", id);
-			session.setAttribute("authUser", vo);
+
 			model.addAttribute("blog_vo", blog_vo);
 			
 			

@@ -51,8 +51,8 @@ public class BlogRepository {
 
 		public List<PostVo> findCategoryPostList(String blog_user_id, int category_no) {
 			Map<String, Object> param = new HashMap<>();
-			param.put("blogId", blog_user_id);
-			param.put("categoryNo", category_no);
+			param.put("blog_user_id", blog_user_id);
+			param.put("category_no", category_no);
 			return sqlSession.selectList("blog.findCategoryPostList", param);
 		}
 
@@ -62,17 +62,27 @@ public class BlogRepository {
 
 		public PostVo findRecentPost(String blog_user_id, int category_no) {
 			Map<String, Object> param = new HashMap<>();
-			param.put("blogId", blog_user_id);
-			param.put("categoryNo", category_no);
+			param.put("blog_user_id", blog_user_id);
+			param.put("category_no", category_no);
 			return sqlSession.selectOne("blog.findCategoryRecentPost", param);
 		}
 
-		public PostVo findPost(String blog_user_id, int categoryNo, int postNo) {
+		public PostVo findPost(String blog_user_id, int category_no, int postNo) {
 			Map<String, Object> param = new HashMap<>();
-			param.put("blogId", blog_user_id);
-			param.put("categoryNo", categoryNo);
+			param.put("blog_user_id", blog_user_id);
+			param.put("category_no", category_no);
 			param.put("postNo", postNo);
-			return sqlSession.selectOne("blog.findPost", param);
+			
+
+			PostVo vo = sqlSession.selectOne("blog.findPost", param);
+			
+			System.out.println("=============================================");
+			System.out.println(blog_user_id);
+			System.out.println(category_no);
+			System.out.println(postNo);
+			System.out.println(vo);
+			System.out.println("=============================================");
+			return vo;
 		}
 		
 		
