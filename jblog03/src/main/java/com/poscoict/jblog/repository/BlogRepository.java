@@ -84,6 +84,11 @@ public class BlogRepository {
 			System.out.println("=============================================");
 			return vo;
 		}
+
+		public boolean insert_default(BlogVo vo1) {
+			// TODO Auto-generated method stub
+			return 1 == sqlSession.insert("blog.insert_default", vo1);
+		}
 		
 		
 

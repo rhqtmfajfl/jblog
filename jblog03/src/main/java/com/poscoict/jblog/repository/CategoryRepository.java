@@ -35,5 +35,9 @@ public class CategoryRepository {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("category.delete_category", no);
 	}
+	public boolean insert_default_category(CategoryVo cvo) {
+		// TODO Auto-generated method stub
+		return 1 == sqlSession.insert("category.insert_default_category", cvo);
+	}
 
 }

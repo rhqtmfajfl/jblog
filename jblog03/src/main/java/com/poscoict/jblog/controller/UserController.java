@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.poscoict.jblog.security.Auth;
-import com.poscoict.jblog.security.AuthUser;
+import com.poscoict.jblog.service.BlogService;
+import com.poscoict.jblog.service.CategoryService;
 import com.poscoict.jblog.service.UserService;
+import com.poscoict.jblog.vo.BlogVo;
+import com.poscoict.jblog.vo.CategoryVo;
 import com.poscoict.jblog.vo.UserVo;
 
 
@@ -22,8 +25,15 @@ import com.poscoict.jblog.vo.UserVo;
 @RequestMapping("/user") // from이나 이런 곳에서 절대 경로뒤에 /user 붙여 줄 수 있다.
 public class UserController {  //userservice가 di 해준다.
 
+	
+	@Autowired
+	private BlogService blogService;
+	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private CategoryService categoryService;
 	
 	@RequestMapping(value="/join", method=RequestMethod.GET)
 	public String join(@ModelAttribute UserVo userVo) {
@@ -41,6 +51,31 @@ public class UserController {  //userservice가 di 해준다.
 		}
 		
 		userService.join(userVo);
+
+		BlogVo vo1 = new BlogVo();
+		CategoryVo cvo = new CategoryVo();
+		
+		String logo ="/images/spring-logo.jpg";
+		String title = "MyBlog";
+		
+		String name="미분류";
+		String description = "기본 카테고리입니다.";
+		
+		vo1.setLogo(logo);
+		vo1.setTitle(title);
+		vo1.setUser_id(userVo.getId());
+		System.out.println("=====================================================================================");
+		System.out.println(vo1);
+		
+		cvo.setDescription(description);
+		cvo.setName(name);
+		cvo.setBlog_user_id(userVo.getId());
+		System.out.println(cvo);
+		System.out.println("=====================================================================================");
+		blogService.insert_default(vo1);
+		
+		categoryService.insert_default_category(cvo);
+		
 		
 		return "redirect:/user/joinsuccess";
 		

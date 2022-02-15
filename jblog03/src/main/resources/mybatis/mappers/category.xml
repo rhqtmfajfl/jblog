@@ -4,6 +4,13 @@
 <mapper namespace="category">
 
 
+<insert id="insert_default_category" parameterType="categoryvo">
+<![CDATA[
+		insert into category values (null, #{name}, #{description}, #{blog_user_id})
+]]>
+
+</insert>
+
 <insert id="insert_category" parameterType="categoryvo">
 <![CDATA[
 		insert into category values (null, #{name}, #{description}, #{blog_user_id})

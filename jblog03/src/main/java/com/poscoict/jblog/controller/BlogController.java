@@ -98,9 +98,14 @@ public class BlogController {
 				@PathVariable("pathNo1") Optional<Integer> pathNo1,
 				@PathVariable("pathNo2") Optional<Integer> pathNo2,
 				Model model, HttpSession session) {
+			BlogVo vo1 = new BlogVo();
+
 			
 			int categoryNo = 0;
 			int postNo = 0;
+			
+	
+			
 			
 			if (pathNo2.isPresent()) {
 				categoryNo = pathNo1.get();
@@ -148,10 +153,13 @@ public class BlogController {
 				@RequestParam(value="logo-file") MultipartFile multipartFile) {
 			
 				BlogVo vo = new BlogVo();
+				BlogVo vo1 = new BlogVo();
 				
 				vo.setTitle(title);
 				vo.setLogo(fileUploadService.restore(multipartFile));
 				vo.setUser_id(id);
+				
+
 				
 				if(blogService.select(id)==null) {
 					blogService.insert_basic_page(vo);

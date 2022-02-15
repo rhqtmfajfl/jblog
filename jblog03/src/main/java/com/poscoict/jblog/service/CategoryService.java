@@ -68,6 +68,13 @@ public class CategoryService {
 	
 		return categoryRepository.delete_category(no);
 	}
+
+	public boolean insert_default_category(CategoryVo cvo) {
+		// TODO Auto-generated method stub
+		
+		
+		return categoryRepository.insert_default_category(cvo);
+	}
 	
 	
 

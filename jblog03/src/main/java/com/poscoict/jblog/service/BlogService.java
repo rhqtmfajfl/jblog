@@ -83,5 +83,11 @@ public class BlogService {
 			return null;
 		}
 
+		public boolean insert_default(BlogVo vo1) {
+			// TODO Auto-generated method stub
+			
+			return blogRepository.insert_default(vo1);
+		}
+
 
 }
